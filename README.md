@@ -8,7 +8,7 @@ and python 3.13
 
 In order to start the project, please use :
 ```bash
-uv init
+uv sync
 ```
 
 
