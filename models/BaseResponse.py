@@ -1,4 +1,7 @@
-class BaseResponse:
+from pydantic import BaseModel
+
+
+class BaseResponse(BaseModel):
     """
     HTTP Base Request
     :ivar code: Response code
@@ -9,6 +12,7 @@ class BaseResponse:
     message: str
 
     def __init__(self, code, message):
+        super().__init__()
         self.code = code
         self.message = message
 

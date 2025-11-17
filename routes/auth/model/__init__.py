@@ -1,2 +1,2 @@
-from LoginRequest import LoginRequest
-from UpdatePasswordRequest import UpdatePasswordRequest
+from .LoginRequest import LoginRequest
+from .UpdatePasswordRequest import UpdatePasswordRequest

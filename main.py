@@ -1,10 +1,9 @@
 from fastapi import Depends, FastAPI
 from sqlmodel import SQLModel
 
-from lib.authentication.check_auth import get_current_user
-from lib.authentication.check_server_token import verify_server_token
-from lib.database.database import engine
-from routes.auth import auth_router
+from lib.authentication import get_current_user, verify_server_token
+from lib.database import engine
+from routes.auth import router as auth_router
 
 SQLModel.metadata.create_all(engine)
 app = FastAPI(
