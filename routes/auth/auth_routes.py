@@ -1,10 +1,11 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import Session, select
 
-from lib.database.database import engine
-from models.User import User
-from routes.auth.model.LoginRequest import LoginRequest
-from routes.auth.service.login_service import create_access_token, verify_password, get_password_hash
+from lib.authentication import get_current_user
+from lib.database import engine
+from models import User
+from .model import LoginRequest, UpdatePasswordRequest
+from .service import verify_password, create_access_token, get_password_hash
 
 router = APIRouter()
 
@@ -39,3 +40,19 @@ async def register(request: LoginRequest):
         session.refresh(new_user)
 
         return create_access_token({"sub": new_user.username})
+
+@router.post("/update-password")
+def update_password(
+    request: UpdatePasswordRequest,
+    current_user: User = Depends(get_current_user),
+):
+    hashed_password = get_password_hash(request.new_password)
+
+    with Session(engine) as session:
+        db_user = session.get(User, current_user.id)
+        db_user.password_hash = hashed_password
+        session.add(db_user)
+        session.commit()
+        session.refresh(db_user)
+
+    return {"detail": "Password updated successfully"}

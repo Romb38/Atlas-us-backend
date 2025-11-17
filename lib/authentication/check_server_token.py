@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import APIKeyHeader
 from decouple import config
 
-server_token_header = APIKeyHeader(name="Server-Token", auto_error=True)
+server_token_header = APIKeyHeader(name=config("SERVER_TOKEN_HEADER", default="Server-Token"), auto_error=True)
 
 def verify_server_token(token: str = Depends(server_token_header)):
     server_token = config("SERVER_TOKEN",default="")

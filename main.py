@@ -4,9 +4,7 @@ from sqlmodel import SQLModel
 from lib.authentication.check_auth import get_current_user
 from lib.authentication.check_server_token import verify_server_token
 from lib.database.database import engine
-from models.User import User
-from routes.auth.auth_routes import router as login_router
-
+from routes.auth import auth_router
 
 SQLModel.metadata.create_all(engine)
 app = FastAPI(dependencies=[Depends(verify_server_token)])
@@ -22,4 +20,4 @@ def sping(
     return "pong : " + user.username
 
 
-app.include_router(login_router)
+app.include_router(auth_router)
