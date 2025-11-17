@@ -7,7 +7,12 @@ from lib.database.database import engine
 from routes.auth import auth_router
 
 SQLModel.metadata.create_all(engine)
-app = FastAPI(dependencies=[Depends(verify_server_token)])
+app = FastAPI(
+    docs_url=None, # Deactivate Swagger UI
+    redoc_url=None, # Deactivate Redoc
+    openapi_url=None, # Deactivate OpenAPI schema
+    dependencies=[Depends(verify_server_token)]
+)
 
 @app.get("/ping")
 def ping():
