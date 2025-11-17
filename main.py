@@ -1,6 +1,7 @@
-def main():
-    print("Hello from atlas-us-backend!")
+from fastapi import FastAPI
 
+app = FastAPI()
 
-if __name__ == "__main__":
-    main()
+@app.get("/ping")
+def ping():
+    return "pong"
