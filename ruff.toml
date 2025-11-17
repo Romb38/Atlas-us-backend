@@ -1,0 +1,6 @@
+exclude = ["**/__init__.py"]
+
+select = ["E", "F", "I"]
+ignore = []
+
+fix = true

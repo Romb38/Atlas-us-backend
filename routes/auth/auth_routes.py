@@ -1,13 +1,15 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
 from lib.authentication import get_current_user
 from lib.database import engine
-from models import User, BaseResponse
+from models import BaseResponse, User
+
 from .model import LoginRequest, UpdatePasswordRequest
-from .service import verify_password, create_access_token, get_password_hash
+from .service import create_access_token, get_password_hash, verify_password
 
 router = APIRouter()
+
 
 @router.post(
     "/login",
@@ -60,6 +62,7 @@ async def register(request: LoginRequest):
         session.refresh(new_user)
 
         return create_access_token(new_user.username)
+
 
 @router.post(
     "/update-password",

@@ -4,6 +4,7 @@ class BaseResponse:
     :ivar code: Response code
     :ivar message: Response message
     """
+
     code: int
     message: str
 
