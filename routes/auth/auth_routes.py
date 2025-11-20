@@ -28,10 +28,10 @@ async def login(request: LoginRequest):
         user = session.exec(statement).first()
 
         if not user:
-            raise HTTPException(status_code=400, detail="Nom d'utilisateur incorrect")
+            raise HTTPException(status_code=401, detail="invalidCredentialsMessage")
 
         if not verify_password(request.password, user.password_hash):
-            raise HTTPException(status_code=400, detail="Mot de passe incorrect")
+            raise HTTPException(status_code=401, detail="invalidCredentialsMessage")
 
         return create_access_token(user.username)
 
